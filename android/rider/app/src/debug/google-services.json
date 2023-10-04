@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "395114762836",
+    "project_id": "repairnow-a72c0",
+    "storage_bucket": "repairnow-a72c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395114762836:android:7c495df5e2946a03c253c1",
+        "android_client_info": {
+          "package_name": "com.repairnow.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClW8vAKJRa_XBDvf2pfX7p6mKgqFKDHWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395114762836:android:d474f8b33e5e2811c253c1",
+        "android_client_info": {
+          "package_name": "com.repairnow.mechanic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClW8vAKJRa_XBDvf2pfX7p6mKgqFKDHWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

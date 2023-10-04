@@ -10,6 +10,9 @@
     <string name="call_driver">Llamar conductor</string>
 
     <string name="cancel">Cancelar</string>
+    <string name="where_to_go">Where to go?</string>
+    <string name="channel_arrived">Arrived</string>
+    <string name="channel_arrived_descrition">Driver notifications</string>
 
     <string name="cancelled">Cancelado</string>
 
