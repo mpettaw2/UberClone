@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_trip_history"
             android:icon="@drawable/ic_trip_history"
-            android:title="Trip History" />
+            android:title="Service History" />
         <item
             android:id="@+id/nav_updateInformation"
             android:icon="@drawable/ic_event_note"

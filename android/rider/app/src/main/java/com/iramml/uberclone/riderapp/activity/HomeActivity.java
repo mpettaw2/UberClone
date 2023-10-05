@@ -118,13 +118,13 @@ public class HomeActivity extends AppCompatActivity
     private Button btnRequestPickup;
     private Toolbar toolbar;
     private GoogleMap mMap;
-    private LinearLayout llPickupInput, llDestinationInput, llPickupPlace, llDestinationPlace;
-    private EditText etFinalPickup, etFinalDestination, etPickup, etDestination;
-    private RecyclerView rvPickupPlaces, rvDestinationPlaces;
+    private LinearLayout llPickupInput, llPickupPlace;
+    private EditText etFinalPickup, etPickup;
+    private RecyclerView rvPickupPlaces;
     private GoogleSignInAccount account;
     private SupportMapFragment mapFragment;
 
-    private Marker riderMarket, destinationMarker;
+    private Marker riderMarket;
     private ArrayList<Marker> driverMarkers=new ArrayList<>();
 
     //Gooogle
@@ -189,18 +189,10 @@ public class HomeActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        carUberX=findViewById(R.id.selectedUberX);
-        carUberBlack=findViewById(R.id.selectedUberBlack);
-
         carUberX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isToggle=!isUberX;
-                isUberX=true;
-                if(isToggle) {
-                    carUberX.setImageResource(R.drawable.car_cui_select);
-                    carUberBlack.setImageResource(R.drawable.car_vip);
-                }
+
                 loadAllAvailableDriver(new LatLng(currentLat, currentLng));
             }
         });
@@ -208,12 +200,6 @@ public class HomeActivity extends AppCompatActivity
         carUberBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isToggle=isUberX;
-                isUberX=false;
-                if(isToggle) {
-                    carUberX.setImageResource(R.drawable.car_cui);
-                    carUberBlack.setImageResource(R.drawable.car_vip_select);
-                }
                 loadAllAvailableDriver(new LatLng(currentLat, currentLng));
             }
         });
@@ -236,24 +222,11 @@ public class HomeActivity extends AppCompatActivity
                 if(b){
                     llPickupInput.setVisibility(View.VISIBLE);
                     llPickupPlace.setVisibility(View.GONE);
-                    llDestinationInput.setVisibility(View.GONE);
-                    llDestinationPlace.setVisibility(View.GONE);
                     etPickup.requestFocus();
                 }
             }
         });
-        etFinalDestination.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(b){
-                    llPickupInput.setVisibility(View.GONE);
-                    llPickupPlace.setVisibility(View.GONE);
-                    llDestinationInput.setVisibility(View.VISIBLE);
-                    llDestinationPlace.setVisibility(View.GONE);
-                    etDestination.requestFocus();
-                }
-            }
-        });
+
         etPickup.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -270,38 +243,17 @@ public class HomeActivity extends AppCompatActivity
 
             }
         });
-        etDestination.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                getPlacesByString(charSequence.toString(), false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         updateFirebaseToken();
     }
 
     private void initViews() {
         llPickupInput = findViewById(R.id.ll_pickup_input);
         llPickupPlace = findViewById(R.id.ll_pickup_place);
-        llDestinationInput = findViewById(R.id.ll_destination_input);
-        llDestinationPlace = findViewById(R.id.ll_destination_place);
         etFinalPickup = findViewById(R.id.et_final_pickup_location);
-        etFinalDestination = findViewById(R.id.et_final_destination);
-        etDestination = findViewById(R.id.et_destination);
+
         etPickup = findViewById(R.id.et_pickup);
         rvPickupPlaces = findViewById(R.id.rv_pickup_places);
         rvPickupPlaces.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvDestinationPlaces = findViewById(R.id.rv_destination_places);
-        rvDestinationPlaces.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -412,10 +364,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void findDriver() {
         DatabaseReference driverLocation;
-        if(isUberX)
-            driverLocation=FirebaseDatabase.getInstance().getReference(Common.driver_tbl).child("UberX");
-        else
-            driverLocation=FirebaseDatabase.getInstance().getReference(Common.driver_tbl).child("Uber Black");
+        driverLocation=FirebaseDatabase.getInstance().getReference(Common.driver_tbl).child("Uber Black");
         GeoFire geoFire=new GeoFire(driverLocation);
         GeoQuery geoQuery=geoFire.queryAtLocation(new GeoLocation(Common.currenLocation.latitude, Common.currenLocation.longitude), radius);
         geoQuery.removeAllListeners();
@@ -794,11 +743,7 @@ public class HomeActivity extends AppCompatActivity
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if(destinationMarker!=null)
-                    destinationMarker.remove();
-                destinationMarker=mMap.addMarker(new MarkerOptions().position(latLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_destination_marker))
-                        .title("Destination"));
+
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
 
                 BottomSheetRiderFragment mBottomSheet=BottomSheetRiderFragment.newInstance(String.format("%f,%f", currentLat, currentLng),
@@ -886,8 +831,6 @@ public class HomeActivity extends AppCompatActivity
                 }
                 if(isPickup)
                     implementPickupRecyclerView(placesResponse.results);
-                else
-                    implementDestinationRecyclerView(placesResponse.results);
                 
             }
         });
@@ -902,8 +845,6 @@ public class HomeActivity extends AppCompatActivity
 
                 llPickupInput.setVisibility(View.GONE);
                 llPickupPlace.setVisibility(View.VISIBLE);
-                llDestinationInput.setVisibility(View.GONE);
-                llDestinationPlace.setVisibility(View.VISIBLE);
 
                 Double lat=Double.valueOf(results.get(index).geometry.location.lat);
                 Double lng=Double.valueOf(results.get(index).geometry.location.lng);
@@ -919,33 +860,6 @@ public class HomeActivity extends AppCompatActivity
         rvPickupPlaces.setAdapter(placesAdapter);
     }
 
-    private void implementDestinationRecyclerView(final ArrayList<Results> results) {
-        PlacesAdapter placesAdapter=new PlacesAdapter(this, results, new ClickListener() {
-            @Override
-            public void onClick(View view, int index) {
-                mPlaceDestination=results.get(index).formatted_address;
-                etFinalDestination.setText(mPlaceDestination);
 
-                llPickupInput.setVisibility(View.GONE);
-                llPickupPlace.setVisibility(View.VISIBLE);
-                llDestinationInput.setVisibility(View.GONE);
-                llDestinationPlace.setVisibility(View.VISIBLE);
-
-                Double lat=Double.valueOf(results.get(index).geometry.location.lat);
-                Double lng=Double.valueOf(results.get(index).geometry.location.lng);
-                LatLng latLng=new LatLng(lat, lng);
-                if(destinationMarker!=null)
-                    destinationMarker.remove();
-                destinationMarker=mMap.addMarker(new MarkerOptions().position(latLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_destination_marker))
-                        .title("Destination"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
-
-                BottomSheetRiderFragment mBottomSheet=BottomSheetRiderFragment.newInstance(mPlaceLocation, mPlaceDestination, false);
-                mBottomSheet.show(getSupportFragmentManager(), mBottomSheet.getTag());
-            }
-        });
-        rvDestinationPlaces.setAdapter(placesAdapter);
-    }
 
 }

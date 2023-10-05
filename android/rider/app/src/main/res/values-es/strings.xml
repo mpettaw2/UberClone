@@ -8,6 +8,7 @@
     <string name="btn_decline">RECHAZAR</string>
 
     <string name="call_driver">Llamar conductor</string>
+    <string name="service_request">Service request</string>
 
     <string name="cancel">Cancelar</string>
     <string name="where_to_go">Where to go?</string>

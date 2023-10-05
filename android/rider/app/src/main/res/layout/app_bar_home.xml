@@ -48,12 +48,14 @@
                     android:src="@drawable/ic_location_drop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/et_final_pickup_location"
-                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/place_autocomplete_search_hint"/>
+                    android:layout_weight="5"
+                    android:hint="@string/place_autocomplete_search_hint"
+                    android:text="Your Location" />
             </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_pickup_input"
@@ -86,19 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_map"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/et_final_destination"
-                    android:layout_weight="5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/place_autocomplete_search_hint"/>
-            </LinearLayout>
+                android:gravity="center_vertical"/>
             <LinearLayout
                 android:id="@+id/ll_destination_input"
                 android:layout_width="match_parent"

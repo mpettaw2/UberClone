@@ -44,32 +44,20 @@
                         android:orientation="horizontal"
                         android:id="@+id/selectCardGroup"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:id="@+id/selectedUberX"
-                            android:src="@drawable/car_cui_select"
-                            android:layout_marginRight="8dp"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp" />
-                        <ImageView
-                            android:id="@+id/selectedUberBlack"
-                            android:src="@drawable/car_vip"
-                            android:layout_marginLeft="8dp"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp" />
-                    </LinearLayout>
+                        android:layout_height="wrap_content"/>
+
                     <Button
-                        android:layout_below="@id/selectCardGroup"
                         android:id="@+id/btnPickupRequest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_below="@id/selectCardGroup"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/btn_sign_in_background"
-                        android:textColor="@android:color/white"
-                        android:text="@string/pickup_request"/>
+                        android:text="@string/service_request"
+                        android:textColor="@android:color/white" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
